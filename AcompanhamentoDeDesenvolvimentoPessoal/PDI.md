@@ -95,15 +95,3 @@ Com base na análise de lacunas, os seguintes objetivos de desenvolvimento foram
 ## Monitoramento e Avaliação
 
 O progresso será monitorado e avaliado regularmente para garantir o alcance dos objetivos de desenvolvimento estabelecidos. Isso incluirá revisões semanais para avaliar o progresso e fazer ajustes no plano de ação, conforme necessário. 
-
-# Pontos Positivos e de Melhoria 
-
-| Pessoa do Grupo         | Pontos Positivos                                             | Pontos de Melhoria     |
-|-------------------------|--------------------------------------------------------------|------------------------|
-| Davi                    | Proatividade                          | Medo de se arriscar, aumentar foco durante as dailys e melhorar exposição de ideias|
-| Matheus                 | Qualidade de entrega                  | Exposição de Ideias, habilidade de dar e receber feedback e comunicação interpessoal|
-| Luiza                   | Engajamento com o Projeto             | Falta de Reconhecimento, aumentar foco durante as dailys  |
-| Zular                   | Comunicação                           | Melhorar a precisão em estimativa de tarefas, dar mais feedbacks em relação ao trabalho feito|
-| Stefano                 | Sempre expõe suas opiniões de forma assertiva| Falta de engajamento, compromisso com os objetivos da equipe e presença em reuniões e planejamentos |
-
-
