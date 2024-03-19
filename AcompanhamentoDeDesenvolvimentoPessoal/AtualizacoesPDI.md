@@ -12,7 +12,7 @@ Durante a última avaliação 360, foram identificadas áreas de desenvolvimento
 | Presença                | Baixa presença e momentos de imprevisibilidade.              | Alto                   |
 | Pontualidade            | Atrasos frequentes em relação a horários estabelecidos.      | Alto                   |
 | Autogerenciamento       | Falhas no planejamento levando a atrasos e imprevisibilidade.| Alto                   |
-| Habilidades Sociais     | Tendência à introversão em discussões e interações sociais.  | Médio      
+| Habilidades Sociais     | Tendência à introversão em discussões e interações sociais.  | Médio                    
 
 ## Análise de Lacunas
 
@@ -46,12 +46,14 @@ Avaliando primeiro as métricas de presença e atrasos em relação à rituais d
 
 A partir da comparação com a presença da sprint 2 para a sprint 3, é possível ver uma melhora em relação a presença nos devs e nas dailys. A baixo está escrita uma tabela que serviu para mapear os horários que cheguei na sala na hora da daily:
 
+
 | Dia da semana           | Horário de chegada na sala | Status ( atrasado / pontual) |
 |-------------------------|----------------------------|------------------------------|
 | Segunda-feira           | 13:57                      | Pontual                      |
 | Terça-feira             | 13:54                      | Pontual                      |
 | Quarta-feira            | 13:57                      | Pontual                      |
 | Quinta-feira            | 14:09                      | Atrasado                     |
-| Sexta-feira             | 13:59                      | Pontual                      |
+| Sexta-feira             | 13:59                      | Pontual                      
+
 
 A partir desses registros é possível avaliar que houve apeas um dia que tive atraso. A partir disso, utilizando o feedback recebido na avaliação 360 e elaborando um plano de PDI ( Plano de Desenvolvimento Pessoal ) foi possível seguir um plano para melhorar os pontos negativos que foram recebidos, com o intuíto de alterar o meu comportamento em relação a presença. Portanto, a partir das métricas e dos resultados atualizados é possível ver uma melhora em relação a presença dentro de uma sprint para a outra. Com isso é possível dizer que a questão de presença e pontualidade foi melhorada, que eram os pontos mais críticos a serem melhorados.
