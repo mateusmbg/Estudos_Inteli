@@ -10,7 +10,7 @@
 
 ## Resposta :
 
-A ponderada foi realizada no software Camunda e a visualização do arquivo está no seguinte [Link](https://github.com/mateusmbg/Projetos/tree/main/Modulo%207%20Ponderadas%20Afonso)
+A ponderada foi realizada no software Camunda e a visualização do arquivo está disponível no arquivo Ponderada do Afonso ( Módulo 7 - Semana 3 ).dmn
 
 Além disso foi criada uma tabela para com mais informações sobre as regras de negócio que foram elaboradas: [ PDF com a tabela ](tabela_detalhada.pdf)
 
