@@ -1,65 +1,50 @@
-// SPDX-License-Identifier: MIT 
-pragma solidity 0.8.19;
+// SPDX-License-Identifier: GPL-3.0
 
-contract Aluguel {
+pragma solidity ^0.8.0;
 
-    // variável que serve para armazenar quem é o dono do contrato
-    address private owner;
-    // enumeração para definir os dois tipos de usuário: o locador e o locatário
-    enum TipoUsuario {locador, locatario}
+contract PropertyTransfer {
+    address public owner;
+    string public location;
+    string public transferType;
 
-    // mapeamento que mapeia cada tipo de usuário onde a chave é um endereço da carteira de algum usuário
-    mapping(address => TipoUsuario) private usuarios;
-    // constructor definido para iniciar quando o contrato for iniciado
-    constructor(){
-        // atribuindo o dono do contrato a variável owner
+    constructor() {
         owner = msg.sender;
+        location = "Piaui";
+        transferType = "Doacao";
     }
 
-    // estrutura para armazenar informações do contrato
-    struct InformacoesApartamento {
-        uint256 valorAluguel; // valor do aluguel
-        address locador; // endereço da carteira do locador do imóvel
-        bool validacaoTransacao; // validação do aluguel
-    }
-    
-    //evento que emite se uma nova solicitação foi registrada
-    event NovaSolicatacaoRegistrada(uint256 valorAluguel, bool validacaoTransacao);
-
-    // arrays para armazenar todos os pedidos de aluguel
-    InformacoesApartamento[] public alugueis;
-
-    function registrarUsuario(address _usuario, TipoUsuario _tipoUsuario) public {
-        // condição para que apenas o owner do contrato possa registrar usuários dentro do contrato
-        require(msg.sender == owner, "Somente o proprietario pode registrar usuarios");
-        usuarios[_usuario] = _tipoUsuario; // Atribui o tipo de usuário ao endereço fornecido.
+    modifier onlyOwner {
+        require(msg.sender == owner, "Only contract owner can call this function");
+        _;
     }
 
-    // funçao que registra o pedido de um aluguel e retorna um valor bool, se o pedido foi registrado ou não
-    function solicitar_aluguel(uint256 _valorAluguel, TipoUsuario _usuarios, bool _validacaoTransacao) public returns (bool) {
-        InformacoesApartamento memory novaSolicitacao = InformacoesApartamento({
-            valorAluguel: _valorAluguel;
-            validacaoTransacao: false;// define a solicitação como não aceita ainda depois de cadastrada
-        });
-
-        solicitacoes.push(novaSolicitacao);
-        //emissão do evento de que uma nova solicitação foi registrada
-        emit NovaSolicitacaoRegistrada(_valorAluguel, false);
+    function getLoc() public view returns (string memory) {
+        return location;
     }
 
-    function aceitar_aluguel(uint256 valorAluguel, TipoUsuario usuarios, bool validacaoTransacao) public {
-        // condição que apenas os locador podem executar essa função
-        require(usuarios[msg.sender] == TipoUsuario.locador, "Somente locadores podem validar transacoes");
-        // Itera sobre as solicitações e marca a solicitação correspondente como validada.
-        for (uint i = 0; i < solicitacoes.length; i++) {
-            if (
-                solicitacoes[i].valorAluguel == _valorAluguel;
-            ) {
-                transacoes[i].validada = true;
-                emit NovaTransacaoRegistrada(_valorAluguel, true);
-                break;
+    function setLoc(string memory _location) public onlyOwner {
+        location = _location;
+    }
+
+    function getTipo() public view returns (string memory) {
+        return transferType;
+    }
+
+    function setTipo(string memory _transferType) public onlyOwner {
+        transferType = _transferType;
+    }
+
+    function getAliquota() public view returns (uint256) {
+        if (keccak256(abi.encodePacked(location)) == keccak256(abi.encodePacked("Ceara"))) {
+            if (keccak256(abi.encodePacked(transferType)) == keccak256(abi.encodePacked("Heranca"))) {
+                return 6;
+            } else {
+                return 3;
             }
+        } else if (keccak256(abi.encodePacked(location)) == keccak256(abi.encodePacked("Piaui"))) {
+            return 4;
+        } else {
+            return 2;
         }
     }
-
 }

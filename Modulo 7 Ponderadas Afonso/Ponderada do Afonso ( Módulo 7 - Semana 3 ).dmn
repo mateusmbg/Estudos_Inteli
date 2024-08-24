@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/2.0" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" id="Definitions_0jk15rg" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.26.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.5.0">
+  <decision id="Decision_1aylf4n" name="Aprovar Pedido de Caixa (FI001)">
+    <informationRequirement id="InformationRequirement_0eun49x">
+      <requiredInput href="#InputData_1xt0ch2" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_0jihh73" hitPolicy="FIRST">
+      <input id="InputClause_1lmi3ez" label="Pedido de Caixa">
+        <inputExpression id="LiteralExpression_1yomhjw" typeRef="boolean">
+          <text>pedidoCaixa</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_0465dd3" label="Orçamento Disponível?">
+        <inputExpression id="LiteralExpression_111rfam" typeRef="string">
+          <text>statusPedido</text>
+        </inputExpression>
+      </input>
+      <output id="OutputClause_17jp89u" label="Aprovar/Negar" name="aprovarPedidoCaixa" typeRef="boolean" />
+      <rule id="DecisionRule_1ck3jg4">
+        <description>Objetivo: Controlar gastos das áreas da empresa, evitando problemas relacionados a orçamento</description>
+        <inputEntry id="UnaryTests_1xx5lh1">
+          <text>orcamentoDisponivel == false &amp;&amp; pedidoCaixa == true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0napmff">
+          <text>orcamentoDisponivel == false</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0g5d675">
+          <text>aprovarPedidoCaixa == false</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0ygzdb6">
+        <inputEntry id="UnaryTests_0oh2b5i">
+          <text>orcamentoDisponivel == true &amp;&amp; pedidoCaixa == true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1y3rc4a">
+          <text>orcamentoDisponivel == true</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1rrjlae">
+          <text>aprovarPedidoCaixa == true</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_135yhhy" name="Verificar Procedência de Pagamentos (FI002)">
+    <informationRequirement id="InformationRequirement_0kqsdiv">
+      <requiredInput href="#InputData_031dkvu" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_0ntf412" hitPolicy="FIRST">
+      <input id="InputClause_1k7ebf1" label="Verificar Procedência de Pagamentos" biodi:width="192">
+        <inputExpression id="LiteralExpression_11bghis" typeRef="boolean">
+          <text>contasNaoPagas || contasNaoRecebidas</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_0ruos42" label="Há contas não pagas/recebidas?">
+        <inputExpression id="LiteralExpression_0203lmc" typeRef="boolean">
+          <text>verificarProcedencia</text>
+        </inputExpression>
+      </input>
+      <output id="OutputClause_1knsdc7" label="Pagar/Cobrar" name="executarVerificacao" typeRef="string" />
+      <rule id="DecisionRule_05ly632">
+        <description>Objetivos: Auxiliar no registro das entradas e saídas da empresa e verificar a disponibilidade de pagamento ou recebimento</description>
+        <inputEntry id="UnaryTests_1eb5nvc">
+          <text>contasNaoPagas == true || contasNaoRecebidas == false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_19t6s4j">
+          <text>verificarProcedencia == true</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0a9lm83">
+          <text>executarVerificacao == true</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_01n8e3n">
+        <inputEntry id="UnaryTests_1ez305s">
+          <text>contasNaoPagas == false || contasNaoRecebidas == true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1ohj5q6">
+          <text>verificarProcedencia == true</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1if8pcw">
+          <text>executarVerificacao == true</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0hsqtn7">
+        <inputEntry id="UnaryTests_19jgeuk">
+          <text>contasNaoPagas == true || contasNaoRecebidas == true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_174e6d0">
+          <text>verificarProcedencia == false</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1rc0k8a">
+          <text>executarVerificacao == false</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_0r4d6w6" name="Avaliar Pedido de Recompra de Estoque (FI003)">
+    <informationRequirement id="InformationRequirement_07q4a2a">
+      <requiredInput href="#InputData_19lnq3d" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_09gwq49" hitPolicy="FIRST">
+      <input id="InputClause_1j8qvpa" label="Pedido de Compra de Estoque">
+        <inputExpression id="LiteralExpression_1129tci" typeRef="boolean">
+          <text>orcamentoDisponivel</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_0fxxmb9" label="Disponibilidade de Orçamento">
+        <inputExpression id="LiteralExpression_0youv0u" typeRef="boolean">
+          <text>orcamentoDisponivel</text>
+        </inputExpression>
+      </input>
+      <output id="OutputClause_1th254m" label="Aprovar / Reprovar" typeRef="boolean" />
+      <rule id="DecisionRule_0f7ilbx">
+        <description>Objetivo: Evitar gastos desregulados na recompra de estoque</description>
+        <inputEntry id="UnaryTests_13c1ky5">
+          <text>pedidoCompraEstoque == true &amp;&amp; orcamentoDisponivel == true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1k195by">
+          <text>orcamentoDisponivel == true</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_03vh8c8">
+          <text>avaliarRecompraEstoque == true</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0lbmn5s">
+        <inputEntry id="UnaryTests_0o1u4d2">
+          <text>pedidoCompraEstoque == true &amp;&amp; orcamentoDisponivel == false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0sehxzw">
+          <text>orcamentoDisponivel == false</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0w2esoz">
+          <text>avaliarRecompraEstoque == false</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <inputData id="InputData_1xt0ch2" name="Pedido de Caixa" />
+  <inputData id="InputData_031dkvu" name="Procedência de Pagamentos ou Recebimentos" />
+  <inputData id="InputData_19lnq3d" name="Pedido automático de recompra de estoque" />
+  <inputData id="InputData_0mq5rqs" name="Pedido de Relatório" />
+  <decision id="Decision_0v7z2al" name="Calcular Faturamento Bruto (FI004)">
+    <informationRequirement id="InformationRequirement_1hen2ca">
+      <requiredInput href="#InputData_0mq5rqs" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_1tjjps8" hitPolicy="FIRST">
+      <input id="InputClause_1nqr0os" label="Pedido de Relatorio">
+        <inputExpression id="LiteralExpression_12uxs3c" typeRef="boolean">
+          <text>pedidoRelatorio</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_1jlz1nu" label="Fechamento de Transações Diárias">
+        <inputExpression id="LiteralExpression_0ec1t3i" typeRef="boolean">
+          <text>transacoesFinalizadas</text>
+        </inputExpression>
+      </input>
+      <output id="OutputClause_1n5ppls" label="Gerar Relatório do Faturamento Bruto" name="gerarRelatorioFaturamento" typeRef="boolean" biodi:width="192" />
+      <rule id="DecisionRule_1wtdk0d">
+        <description>Objetivo: Apresentar resultados relacionados ao retorno de vendas da empresa</description>
+        <inputEntry id="UnaryTests_17pqib7">
+          <text>pedidoRelatorio == true &amp;&amp; transacoesFinalizadas == true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0dds2a1">
+          <text>transacoesFinalizadas == true</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0ijmnix">
+          <text>gerarRelatorioFaturamento == true</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1grr95b">
+        <inputEntry id="UnaryTests_0dqann8">
+          <text>pedidoRelatorio == true &amp;&amp; transacoesFinalizadas == false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0tdaijg">
+          <text>transacoesFinalizadas == false</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0uilma0">
+          <text>gerarRelatorioFaturamento == false</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_0dhrxfh" name="Enviar Faturas para Parceiros (FI005):">
+    <informationRequirement id="InformationRequirement_1fmzrx8">
+      <requiredInput href="#InputData_0lhtxg8" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_0bmph26" hitPolicy="FIRST">
+      <input id="InputClause_0qgb01s" label="Ativacao do Contrato">
+        <inputExpression id="LiteralExpression_15bvruf" typeRef="boolean">
+          <text>contratoAtivo</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_1n9eyv8" label="Faturas Pendentes">
+        <inputExpression id="LiteralExpression_0me4dw9" typeRef="boolean">
+          <text>faturasPendentes</text>
+        </inputExpression>
+      </input>
+      <output id="OutputClause_0vzghkq" label="Envio da Fatura" name="enviarFatura" typeRef="boolean" />
+      <rule id="DecisionRule_0namir9">
+        <description>Objetivo: Enviar faturas para os parceiros de negócio com faturas pendentes no mês</description>
+        <inputEntry id="UnaryTests_0ri4p3u">
+          <text>contratoAtivo == true &amp;&amp; faturasPendentes == true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0z6tgak">
+          <text>faturasPendentes == true</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1o0h1lw">
+          <text>enviarFatura == true</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0h7wxyt">
+        <inputEntry id="UnaryTests_10eyyda">
+          <text>contratoAtivo == true &amp;&amp; faturasPendentes == false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0435u5b">
+          <text>faturasPendentes == false</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1jle210">
+          <text>enviarFatura == false</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <inputData id="InputData_0lhtxg8" name="Verificação de Faturas Enviadas / Pendentes" />
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape id="DMNShape_1ita6kn" dmnElementRef="Decision_1aylf4n">
+        <dc:Bounds height="80" width="180" x="360" y="80" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_06yu8ei" dmnElementRef="Decision_135yhhy">
+        <dc:Bounds height="80" width="180" x="360" y="250" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1n0eati" dmnElementRef="Decision_0r4d6w6">
+        <dc:Bounds height="80" width="180" x="360" y="420" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0jprynm" dmnElementRef="InputData_1xt0ch2">
+        <dc:Bounds height="45" width="125" x="128" y="98" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1cdvkyl" dmnElementRef="InformationRequirement_0eun49x">
+        <di:waypoint x="253" y="121" />
+        <di:waypoint x="340" y="120" />
+        <di:waypoint x="360" y="120" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1imtk6w" dmnElementRef="InputData_031dkvu">
+        <dc:Bounds height="45" width="125" x="128" y="267" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1rmflx8" dmnElementRef="InformationRequirement_0kqsdiv">
+        <di:waypoint x="253" y="290" />
+        <di:waypoint x="340" y="290" />
+        <di:waypoint x="360" y="290" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1d0wftv" dmnElementRef="InputData_19lnq3d">
+        <dc:Bounds height="45" width="125" x="129" y="438" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1aila5e" dmnElementRef="InformationRequirement_07q4a2a">
+        <di:waypoint x="254" y="461" />
+        <di:waypoint x="340" y="460" />
+        <di:waypoint x="360" y="460" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1k7dt41" dmnElementRef="InputData_0mq5rqs">
+        <dc:Bounds height="45" width="125" x="129" y="618" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1bxqiav" dmnElementRef="InformationRequirement_1hen2ca">
+        <di:waypoint x="254" y="641" />
+        <di:waypoint x="340" y="640" />
+        <di:waypoint x="360" y="640" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_04d9rwl" dmnElementRef="Decision_0v7z2al">
+        <dc:Bounds height="80" width="180" x="360" y="600" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_11br108" dmnElementRef="Decision_0dhrxfh">
+        <dc:Bounds height="80" width="180" x="360" y="800" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_110nahu" dmnElementRef="InputData_0lhtxg8">
+        <dc:Bounds height="45" width="125" x="129" y="818" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1uhnziz" dmnElementRef="InformationRequirement_1fmzrx8">
+        <di:waypoint x="254" y="841" />
+        <di:waypoint x="340" y="840" />
+        <di:waypoint x="360" y="840" />
+      </dmndi:DMNEdge>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>
