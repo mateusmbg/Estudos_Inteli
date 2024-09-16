@@ -300,6 +300,7 @@ Esta ponderada foi desenvolvida com o propósito de modelagem dos dados mestres 
 </table>
 </sql>
 ```
+</details>
 4. Clique no botão *LOAD XML* após colar o código.
 
 ## Relacionamentos
